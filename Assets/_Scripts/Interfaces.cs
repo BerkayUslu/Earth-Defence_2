@@ -12,3 +12,4 @@ public interface IPlayerController
     public Vector2 input { get; }
     public Vector3 position { get; }
 }
+

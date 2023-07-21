@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour, IDamageable
     private Transform _transform;
     private Rigidbody _rb;
     private int _speed;
-    private int _health;
+    public int _health;
     private int _power;
     private float _attackRange;
     private Vector3 directionVector;
@@ -35,6 +35,7 @@ public class Enemy : MonoBehaviour, IDamageable
         died = false;
         isAttacking = false;
         isInAttackRange = false;
+        _health = _enemyData.BaseHealth;
     }
 
     private void Start()
@@ -45,6 +46,7 @@ public class Enemy : MonoBehaviour, IDamageable
     private void FixedUpdate()
     {
 
+        if (died) return;
         if (isInAttackRange && !isAttacking)
         {
             isAttacking = true;
@@ -76,17 +78,18 @@ public class Enemy : MonoBehaviour, IDamageable
     public void TakeDamage(int damageValue)
     {
         _health -= damageValue;
-        if (_health <= 0) Die();
+        if (_health <= 0) StartCoroutine("Die");
 
     }
 
     public bool IsItAttacking() { return isAttacking; }
     public bool IsItDead() { return died; }
 
-    private IEnumerable Die()
+    private IEnumerator Die()
     {
+        _rb.velocity = Vector3.zero;
         died = true;
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(3);
         gameObject.SetActive(false);
     }
 
