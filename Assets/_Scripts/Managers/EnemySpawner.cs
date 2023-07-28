@@ -9,7 +9,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] int maxEnemySpawnDistance = 60; 
     private IPlayerController _player;
 
-    private float lastSpawnTime = 0f;
+    private float lastSpawnTime = -10f;
 
 
     private void Awake()
@@ -31,9 +31,9 @@ public class EnemySpawner : MonoBehaviour
 
     private void EnemySpawnController()
     {
-        if(Time.time - lastSpawnTime > 15)
+        if(Time.time - lastSpawnTime > 10)
         {
-            for(int i = 0; i < 1; i++)
+            for(int i = 0; i < 30; i++)
             {
                 SpawnEnemy();
             }
@@ -43,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        GameObject enemy = EnemyPool.EnemyPoolSharedInstance.GetPooledObjectOrCreateIfNotAvailable(enemyTypesList[0].EnemyPrefab, enemyTypesList[0].EnemyName);
+        GameObject enemy = EnemyPool.EnemyPoolSharedInstance.GetPooledObjectOrCreateIfNotAvailable(enemyTypesList[1].EnemyPrefab, enemyTypesList[1].EnemyName);
         enemy.transform.position = _player.position + GenerateRandomSpawnPoint();
         enemy.SetActive(true);
     }

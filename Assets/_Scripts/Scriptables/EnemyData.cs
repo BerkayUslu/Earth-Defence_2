@@ -10,6 +10,7 @@ public class EnemyData : ScriptableObject
     public int BaseHealth;
     public int BaseSpeed;
     public int AttackPower;
+    public int ExperiencePoints;
     public float AttackFrequency;
     public EnemyRange enemyRange;
 }

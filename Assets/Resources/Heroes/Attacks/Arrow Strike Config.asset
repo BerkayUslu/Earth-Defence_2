@@ -16,11 +16,12 @@ MonoBehaviour:
   EnableAutoAim: 1
   AOETypeAttack: 0
   DamageAreaRadius: 0
-  damage: 2
+  damage: 5
   Speed: 1
   DamageIncreaseWithLevel: 1
   SpeedIncreaseWithLevel: 0.1
-  CooldownDecreasePrecentage: 10
+  CooldownDecreasePrecentageWithLevel: 10
+  DamageRadiusIncreaseWithLevel: 0
   BaseCooldownTime: 3
   AttackPrefab: {fileID: 585332364806853229, guid: c80d9746844514a2cb5690d7d9f55697,
     type: 3}

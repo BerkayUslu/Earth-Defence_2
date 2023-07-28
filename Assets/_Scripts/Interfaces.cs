@@ -13,3 +13,31 @@ public interface IPlayerController
     public Vector3 position { get; }
 }
 
+public interface ISkill
+{
+    public void SkillLevelUp(string skillName);
+    public List<string> GetSkillNames();
+}
+
+public interface IAutoAim
+{
+    void SetDirection(Vector3 direction);
+}
+
+public interface IExperience
+{
+    public void GainExperience(int expAmount);
+
+}
+
+public interface IHealth
+{
+    public int GetHealth();
+    public int GetMaxHealth();
+}
+
+public interface ISkillComponent
+{
+    public void SetSkillConfig(Skill skill);
+    public void SetPosition(Vector3 playerPosition);
+}

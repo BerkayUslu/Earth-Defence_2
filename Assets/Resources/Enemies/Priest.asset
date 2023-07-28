@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df27328b126dc45498888fde580907fa, type: 3}
+  m_Name: Priest
+  m_EditorClassIdentifier: 
+  EnemyName: Priest
+  EnemyPrefab: {fileID: 3709887749430958274, guid: a92a6b4ab66ef4f22919269d963f88f1,
+    type: 3}
+  BaseHealth: 10
+  BaseSpeed: 1
+  AttackPower: 5
+  ExperiencePoints: 3
+  AttackFrequency: 3
+  enemyRange: 2

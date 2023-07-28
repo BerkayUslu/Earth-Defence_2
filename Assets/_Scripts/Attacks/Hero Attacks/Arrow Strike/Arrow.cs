@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Arrow : MonoBehaviour
+public class Arrow : MonoBehaviour, IAutoAim, ISkillComponent
 {
     private Transform _transform;
-    [SerializeField] HeroAttackConfig _attackConfig;
+    private Skill _attackConfig;
     private Vector3 _direction;
     private float lifeTime = 5f;
     private float deathTime;
@@ -18,49 +18,50 @@ public class Arrow : MonoBehaviour
 
     }
 
-    //LEarnnnn
     private void OnEnable()
     {
-        if (_direction != Vector3.zero)
-        {
-            // Calculate the desired rotation based on the direction
-            Quaternion targetRotation = Quaternion.LookRotation(_direction, Vector3.up);
-
-            // Preserve the X-axis rotation at 90 degrees
-            targetRotation = Quaternion.Euler(90f, _transform.rotation.eulerAngles.y, targetRotation.eulerAngles.z);
-
-            // Apply the new rotation to the player
-            transform.rotation = targetRotation;
-        }
+        AdjustRotation();
 
         deathTime = Time.time + lifeTime;
     }
 
-    private void RotateArrow()
+    private void AdjustRotation()
+    {
+        if (_direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(_direction, Vector3.up);
+            targetRotation = Quaternion.Euler(90f, targetRotation.eulerAngles.y, targetRotation.eulerAngles.z);
+            transform.rotation = targetRotation;
+        }
+    }
+
+    public void SetPosition(Vector3 playerPosition)
+    {
+        _transform.position = playerPosition + Vector3.up ;
+    }
+
+    public void SetSkillConfig(Skill skill) { _attackConfig = skill; }
+
+    private void RotateArrowAroundItself()
     {
         _transform.Rotate(Vector3.up * rotationSpeed);
     }
 
-    // 
     private void FixedUpdate()
     {
-        RotateArrow();
+        RotateArrowAroundItself();
         if (isItOnUI) return;
         OnMove();
 
-        if (Time.time > deathTime) StartCoroutine("Deactivate");
+        if (Time.time > deathTime) gameObject.SetActive(false);
     }
 
     public void SetDirection(Vector3 direction) { _direction = direction; }
 
-    public void SetConfig(HeroAttackConfig config)
-    {
-        _attackConfig = config;
-    }
 
     private void OnMove()
     {
-        _transform.position += _direction/2 * _attackConfig.Speed;
+        _transform.position += _direction * _attackConfig.Speed / 4;
     }
 
     public void SetIsItOnUI() { isItOnUI = true; }
@@ -70,14 +71,10 @@ public class Arrow : MonoBehaviour
         if(other.tag == "EnemyBody")
         {
             //do damage
-            other.transform.parent.GetComponent<IDamageable>().TakeDamage(_attackConfig.damage);
-            StartCoroutine("Deactivate");
+            other.transform.parent.GetComponent<IDamageable>().TakeDamage(_attackConfig.skillConfig.damage);
+            gameObject.SetActive(false);
         }
     }
 
-    private IEnumerator Deactivate()
-    {
-        yield return new WaitForSeconds(0.06f);
-        gameObject.SetActive(false);
-    }
+
 }

@@ -18,5 +18,6 @@ MonoBehaviour:
   BaseHealth: 5
   BaseSpeed: 6
   AttackPower: 2
+  ExperiencePoints: 1
   AttackFrequency: 1.5
   enemyRange: 0

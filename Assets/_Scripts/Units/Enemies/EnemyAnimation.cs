@@ -39,9 +39,9 @@ public class EnemyAnimation : MonoBehaviour
 
     private int _currentState;
 
-    private static readonly int Run = Animator.StringToHash("Zombie Run");
-    private static readonly int Attack = Animator.StringToHash("Zombie Attack");
-    private static readonly int Death = Animator.StringToHash("Zombie Death");
+    private static readonly int Run = Animator.StringToHash("Run");
+    private static readonly int Attack = Animator.StringToHash("Attack");
+    private static readonly int Death = Animator.StringToHash("Death");
 
     #endregion
 }

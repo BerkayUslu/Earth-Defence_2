@@ -9,6 +9,7 @@ public class EnemyPool : MonoBehaviour
     private Dictionary<string, List<GameObject>> pooledObjectsDictionaryWithNameKeys;
     private IPlayerController _playeMovement;
     private IDamageable _playerHealth;
+    private IExperience _playerExperience;
 
     private void Awake()
     {
@@ -21,6 +22,7 @@ public class EnemyPool : MonoBehaviour
         GameObject player = GameObject.Find("Player").transform.GetChild(0).gameObject;
         _playeMovement = player.GetComponent<IPlayerController>();
         _playerHealth = player.GetComponent<IDamageable>();
+        _playerExperience = player.GetComponent<IExperience>();
         _enemyUnitsTransform = GameObject.Find("Enemy Units").transform;
     }
 
@@ -41,7 +43,7 @@ public class EnemyPool : MonoBehaviour
         }
 
         GameObject newObj = Instantiate(objectToPool);
-        newObj.GetComponent<Enemy>().SetPlayerPlayerReference(_playeMovement, _playerHealth);
+        newObj.GetComponent<Enemy>().SetPlayerPlayerReference(_playeMovement, _playerHealth, _playerExperience);
         newObj.transform.SetParent(_enemyUnitsTransform);
         pooledObjectsDictionaryWithNameKeys[unitName].Add(newObj);
         return newObj;

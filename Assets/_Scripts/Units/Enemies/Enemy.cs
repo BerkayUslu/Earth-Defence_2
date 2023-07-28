@@ -9,19 +9,23 @@ public class Enemy : MonoBehaviour, IDamageable
     private Transform _transform;
     private Rigidbody _rb;
     private int _speed;
-    public int _health;
+    private int _health;
     private int _power;
     private float _attackRange;
     private Vector3 directionVector;
     private IPlayerController _playerMovement;
     private IDamageable _playerHealth;
+    private IExperience _playerExperience;
     private SphereCollider _collider;
+    private CapsuleCollider _bodyCollider;
     private bool died = false;
     private bool isAttacking = false;
     private bool isInAttackRange = false;
+ 
 
     private void Awake()
     {
+        _bodyCollider = GetComponentInChildren<CapsuleCollider>();
         _collider = GetComponent<SphereCollider>();
         _rb = GetComponent<Rigidbody>();
         _transform = transform;
@@ -32,6 +36,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private void OnEnable()
     {
+        _bodyCollider.enabled = true;
         died = false;
         isAttacking = false;
         isInAttackRange = false;
@@ -54,13 +59,13 @@ public class Enemy : MonoBehaviour, IDamageable
         }
         else if(!isInAttackRange)
         {
-            if (isAttacking) Debug.Log("Attack stoped");
             FollowEnemy();
             SetRotation();
             isAttacking = false;
             StopAllCoroutines();
         }
     }
+
 
     private void SetRotation()
     {
@@ -89,6 +94,8 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         _rb.velocity = Vector3.zero;
         died = true;
+        _playerExperience.GainExperience(_enemyData.ExperiencePoints);
+        _bodyCollider.enabled = false;
         yield return new WaitForSeconds(3);
         gameObject.SetActive(false);
     }
@@ -115,15 +122,16 @@ public class Enemy : MonoBehaviour, IDamageable
         _collider.radius = _attackRange;
     }
     //Set these when creating object
-    public void SetPlayerPlayerReference(IPlayerController playerMovement, IDamageable playerHealth)
+    public void SetPlayerPlayerReference(IPlayerController playerMovement, IDamageable playerHealth, IExperience playerExperience)
     {
         _playerMovement = playerMovement;
         _playerHealth = playerHealth;
+        _playerExperience = playerExperience;
     }
 
-    IEnumerable Attack()
+    private IEnumerator Attack()
     {
-        while (!isInAttackRange)
+        while (isInAttackRange)
         {
             _playerHealth.TakeDamage(_power);
             yield return new WaitForSeconds(_enemyData.AttackFrequency);
