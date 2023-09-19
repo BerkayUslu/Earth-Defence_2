@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meleeRange: 1.5
   rangedClose: 3.5
-  rangedMid: 5.5
+  rangedMid: 7

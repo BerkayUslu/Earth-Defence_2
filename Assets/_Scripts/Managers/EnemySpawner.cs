@@ -31,9 +31,9 @@ public class EnemySpawner : MonoBehaviour
 
     private void EnemySpawnController()
     {
-        if(Time.time - lastSpawnTime > 10)
+        if(Time.time - lastSpawnTime > 20)
         {
-            for(int i = 0; i < 30; i++)
+            for(int i = 0; i < 10; i++)
             {
                 SpawnEnemy();
             }
@@ -43,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        GameObject enemy = EnemyPool.EnemyPoolSharedInstance.GetPooledObjectOrCreateIfNotAvailable(enemyTypesList[1].EnemyPrefab, enemyTypesList[1].EnemyName);
+        GameObject enemy = EnemyPool.EnemyPoolSharedInstance.GetPooledObjectOrCreateIfNotAvailable(enemyTypesList[0].EnemyPrefab, enemyTypesList[0].EnemyName);
         enemy.transform.position = _player.position + GenerateRandomSpawnPoint();
         enemy.SetActive(true);
     }

@@ -17,7 +17,7 @@ public class DebugButton : MonoBehaviour
 
     public void LevelSkillUp()
     {
-        _skillManager.SkillLevelUp("Arrow Strike");
+        _skillManager.SkillLevelUp("Arrow Rain");
         canvas.SetActive(false);
     }
 

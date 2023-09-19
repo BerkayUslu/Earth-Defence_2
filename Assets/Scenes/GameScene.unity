@@ -325,6 +325,7 @@ MonoBehaviour:
   enemyTypesList:
   - {fileID: 11400000, guid: 0c8694fdae4ff469dbe8a8ecbc981fd0, type: 2}
   - {fileID: 11400000, guid: 740727690ef134eb4b0edab9edd85fe9, type: 2}
+  - {fileID: 11400000, guid: 8cbebf93e047d45f29e235849bd869eb, type: 2}
   minEnemySpawnDistance: 40
   maxEnemySpawnDistance: 60
 --- !u!114 &116532207

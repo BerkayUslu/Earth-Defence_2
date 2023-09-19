@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df27328b126dc45498888fde580907fa, type: 3}
-  m_Name: Priest
+  m_Name: Minotaur
   m_EditorClassIdentifier: 
-  EnemyName: Priest
-  EnemyPrefab: {fileID: 3709887749430958274, guid: a92a6b4ab66ef4f22919269d963f88f1,
+  EnemyName: Minotaur
+  EnemyPrefab: {fileID: 3079993344739277410, guid: 1c6790e74df504ec6afc26fdd6affebe,
     type: 3}
-  BaseHealth: 10
-  BaseSpeed: 2
-  AttackPower: 6
-  ExperiencePoints: 3
-  AttackFrequency: 3
-  enemyRange: 2
+  BaseHealth: 20
+  BaseSpeed: 4
+  AttackPower: 3
+  ExperiencePoints: 5
+  AttackFrequency: 2
+  enemyRange: 0

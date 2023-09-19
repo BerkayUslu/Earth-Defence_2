@@ -36,6 +36,14 @@ public interface IHealth
     public int GetMaxHealth();
 }
 
+public interface IEnemy
+{
+    public IEnumerator Attack();
+    public void StartAttack();
+    public void StopAttack();
+    public void SetReferences(IDamageable playerHealth, EnemyData enemyData);
+}
+
 public interface ISkillComponent
 {
     public void SetSkillConfig(Skill skill);

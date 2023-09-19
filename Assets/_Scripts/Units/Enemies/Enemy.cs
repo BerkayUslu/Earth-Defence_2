@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour, IDamageable
     private Vector3 directionVector;
     private IPlayerController _playerMovement;
     private IDamageable _playerHealth;
+    private IEnemy _enemy;
     private IExperience _playerExperience;
     private SphereCollider _collider;
     private CapsuleCollider _bodyCollider;
@@ -28,6 +29,7 @@ public class Enemy : MonoBehaviour, IDamageable
         _bodyCollider = GetComponentInChildren<CapsuleCollider>();
         _collider = GetComponent<SphereCollider>();
         _rb = GetComponent<Rigidbody>();
+        _enemy = GetComponent<IEnemy>();
         _transform = transform;
         _speed = _enemyData.BaseSpeed;
         _health = _enemyData.BaseHealth;
@@ -46,6 +48,7 @@ public class Enemy : MonoBehaviour, IDamageable
     private void Start()
     {
         SetAttackRange();
+        _enemy.SetReferences(_playerHealth, _enemyData);
     }
 
     private void FixedUpdate()
@@ -55,20 +58,28 @@ public class Enemy : MonoBehaviour, IDamageable
         if (isInAttackRange && !isAttacking)
         {
             isAttacking = true;
-            StartCoroutine("Attack");
+            _enemy.StartAttack();
+            StopMoving();
+            SetRotation();
         }
         else if(!isInAttackRange)
         {
-            FollowEnemy();
             SetRotation();
+            FollowEnemy();
             isAttacking = false;
-            StopAllCoroutines();
+            _enemy.StopAttack();
         }
+    }
+
+    private void StopMoving()
+    {
+        _rb.velocity = Vector3.zero;
     }
 
 
     private void SetRotation()
     {
+        if (directionVector == Vector3.zero) return;
         Quaternion direciton = Quaternion.LookRotation(directionVector);
         _transform.rotation = direciton;
     }
@@ -129,14 +140,6 @@ public class Enemy : MonoBehaviour, IDamageable
         _playerExperience = playerExperience;
     }
 
-    private IEnumerator Attack()
-    {
-        while (isInAttackRange)
-        {
-            _playerHealth.TakeDamage(_power);
-            yield return new WaitForSeconds(_enemyData.AttackFrequency);
-        }
-    }
 
     private float GetRange()
     {
